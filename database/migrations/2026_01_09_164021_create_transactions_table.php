@@ -6,24 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->integer('amount');
-            $table->enum('type', ['debit', 'credit']);
-            $table->timestamps();;
+            $table->enum('type', ['topup', 'payment']);
+            $table->decimal('amount', 15, 2);
+            $table->string('reference_id')->unique(); // Format: TRX-TIMESTAMP-RAND
+            $table->enum('status', ['pending', 'success', 'failed'])->default('pending');
+            $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('transactions');

@@ -20,7 +20,19 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'rfid_uid',
+        'role',
     ];
+
+    public function wallet()
+    {
+        return $this->hasOne(Wallet::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('rfid_uid')->nullable()->unique(); // Kolom kunci untuk RFID
+            $table->enum('role', ['admin', 'cashier', 'customer'])->default('customer');
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password'); // Tetap ada untuk Admin/Cashier login dashboard
             $table->rememberToken();
             $table->timestamps();
         });
